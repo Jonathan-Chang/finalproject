@@ -7,13 +7,18 @@ template <typename T>
 class Node {
 public:
 	Node() {
-		data = nullptr;
+		value = nullptr;
+		left = nullptr;
+		right = nullptr;
+	}
+
+	Node(T item) {
+		value = item;
 		left = nullptr;
 		right = nullptr;
 	}
 	
-private:
-	T *value;
+	T value;
 	Node *left;
 	Node *right;
 };
@@ -26,14 +31,41 @@ public:
 	}
 
 	void insert(T item) {
-		
+		Node<T> *node = root;
+		Node<T> *parent;
+
+		/* If root is null, add item to root */
+		if (!root) {
+			root = new Node<T>(item);
+			return;
+		}
+
+		/* Find the correct position to place the item */
+		while (node) {
+			parent = node;
+
+			if (item < node->value)
+				node = node->left;
+			else
+				node = node->right;
+		}
+
+		if (item < parent->value)
+			parent->left = new Node<T>(item);
+		else
+			parent->right = new Node<T>(item);
 	}
 
 	void remove(T item) {
+		/*		Node *node, *parent;
 
+		if (!root)
+			return;
+
+		*/
 	}
 
-	Node *search(T item) {
+	Node<T> *search(T item) {
 		Node<T> *node = root;
 		
 		while (root) {
@@ -48,9 +80,22 @@ public:
 		return nullptr;
 	}
 
+	void print() {
+		inorder(root);
+	}
 
 private:
 	Node<T> *root;
+
+	void inorder(Node<T> *node) {
+		if (!node)
+			return;
+		
+		inorder(node->left);
+		std::cout << node->value << std::endl;
+		inorder(node->right);
+	}
+
 };
 
 
