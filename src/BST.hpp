@@ -6,23 +6,24 @@
 template <typename T>
 class Node {
 public:
-  
+	Node();
 
 private:
-  T *data;
-  Node<T> *left;
-  Node<T> *right;
+	T *data;
+	Node *left;
+	Node *right;
 };
 
 template <typename T>
-class Tree {
+class BST {
 public:
-  bool insert(T);
-  void remove(T);
-  void search(T);
+	BST() {
+		root = nullptr;
+	}
 
 private:
-  
+	Node<T> *root;
 };
+
 
 #endif

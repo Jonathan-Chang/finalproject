@@ -1,6 +1,6 @@
-#include "Tree.hpp"
+#include "BST.hpp"
 
 int main() {
-  Tree<int> tree;
+  BST<int> tree;
   return 0;
 }
