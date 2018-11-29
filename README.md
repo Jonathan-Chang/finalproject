@@ -1,8 +1,7 @@
 # finalproject
 
 1. **Algorithm Purpose:** 
-Clearly describe the problem that your algorithm is designed to solve. What are the inputs and
-outputs of your algorithm. Use an example to illustrate the problem, if possible. -- We need a data structure that can store items in order  (nature of tree self sorts and sort time is just O(n), search is cut down compared to a traditional list to log(n) )
+We need a data structure that can store items in order  (nature of tree self sorts and sort time is just O(n), search is cut down compared to a traditional list to log(n) ). 
 
 2. **Algorithm:** Describe the basic idea of the algorithm; show and describe pseudo-code. Your pseudo-code should be
 in the style of the text book, should be extremely neat and clear, and should use enough abstraction so that it fits on
@@ -16,9 +15,9 @@ one or two slides.
 
 6.~~**Demo:** A short demonstration of your program. Have this ready to go; do not waste time “setting up.” You may
 decide to provide static screen shots and sample output instead of running your program “live”, to ensure a smooth
-presentation.~~
+presentation.~~ 
 
-7. **Experimental Plan:** Describe the dataset that you used to test the algorithm. How did you generate it? What
+7. **Experimental Plan:** Integers, in order, reverse order, randomized,and with varying input size. Describe the dataset that you used to test the algorithm. How did you generate it? What
 characteristics does it have, and why? What did you decide to vary in the input set, and why?
 
 8. **Results:** What did you learn from testing your algorithm?
