@@ -11,6 +11,14 @@ one or two slides.
 
 ## **Algorithm Analysis:** 
 BST
+Insert
+Delete
+Search
+
+RBT
+Insert
+Delete
+Search
 
 What are the interesting features of the algorithm? What is its time complexity, and why?
 
