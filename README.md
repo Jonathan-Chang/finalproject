@@ -20,9 +20,6 @@ Using a regular non self balancing BST operations can vary in time complexity. W
 ## **Implementation:** 
 C++, BST, Red-Black Tree
 
-6.~~**Demo:** A short demonstration of your program. Have this ready to go; do not waste time “setting up.” You may
-decide to provide static screen shots and sample output instead of running your program “live”, to ensure a smooth
-presentation.~~ 
 
 ## **Experimental Plan:** 
 Integers, in order, reverse order, randomized,split inorder randomized inorder and with varying input size (on insert, search, and delete). The random numbers will be generated with a random seed.
