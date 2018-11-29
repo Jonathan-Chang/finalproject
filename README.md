@@ -1,4 +1,4 @@
-# finalproject
+## BST vs RBT
 
 # **Algorithm Purpose:** 
 We need a data structure that can store items in order  (nature of tree self sorts and sort time is just O(n), search is cut down compared to a traditional list to log(n) ) during best case. 
