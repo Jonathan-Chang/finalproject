@@ -1,0 +1,6 @@
+#include "Tree.hpp"
+
+int main() {
+  Tree tree;
+  return 0;
+}

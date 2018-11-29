@@ -1,0 +1,6 @@
+CPPFLAGS= -Wall -Wextra -pedantic -std=c++11 -g
+
+all: Main
+
+Main: Main.cpp Tree.hpp
+	g++ $(CPPFLAGS) Main.cpp -o Main
