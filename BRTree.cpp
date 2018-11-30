@@ -19,6 +19,8 @@
 
 
 using namespace std;
+vector<int> valueVector;
+
 
 struct Node 
 { 
@@ -33,31 +35,30 @@ struct Node
 }; 
   
 
-class RBTree 
-{ 
+class RBTree { 
 
 
     
 public: 
 	void rotateLeft(Node *&, Node *&); 
-    void rotateRight(Node *&, Node *&); 
-    void fix(Node *&, Node *&); 
-	 Node *root; 
-    RBTree() { root = NULL; } 
-    void insert(const int &n); 
-    void inorder(); 
-    void levelOrder(Node *root); 
+	void rotateRight(Node *&, Node *&); 
+	void fix(Node *&, Node *&); 
+	Node *root; 
+	RBTree() { root = NULL; } 
+	void insert(const int &n); 
+	void inorder(Node *root); 
+	void levelOrder(Node *root); 
 }; 
   
 
-void inorder(Node *root) 
-{ 
-    if (root == NULL) 
-        return; 
-  
-    inorderHelper(root->left); 
-    cout << root->data << "  "; 
-    inorderHelper(root->right); 
+void inorder(Node *root){ 
+
+	if (root == NULL){
+		return; 
+	}  
+	inorder(root->left); 
+	cout << root->data << "  "; 
+	inorder(root->right); 
 } 
   
 
@@ -69,6 +70,8 @@ Node* createNewNode(int data){
 	newNode->right = NULL;
 	newNode->parent = NULL;
 	newNode->color = "RED";
+	newNode->uncle = NULL;
+	newNode->grandparent = NULL;
 
 	return newNode;
 
@@ -79,98 +82,100 @@ Node* createNewNode(int data){
 
 
 
-Node* BSTInsert(Node* root, Node *node) 
-{ 
+Node* BSTInsert(Node* root, Node *node){ 
 
-    if (root == NULL) 
-       return node; 
+	if (root == NULL){
+		return node; 
+  	}
   
-  
-    if (node->data < root->data) 
-    { 
-        root->left  = BSTInsert(root->left, node); 
-        root->left->parent = root; 
-    } 
-    else if (node->data > root->data) 
-    { 
-        root->right = BSTInsert(root->right, node); 
-        root->right->parent = root; 
-    } 
+	if (node->data < root->data){ 
+		root->left  = BSTInsert(root->left, node); 
+		root->left->parent = root; 
+    	} 
+	else if (node->data > root->data){ 
+        	root->right = BSTInsert(root->right, node); 
+        	root->right->parent = root; 
+    	} 
+	else{
+		root->right = BSTInsert(root->right, node); 
+        	root->right->parent = root; 
+
+	}
   
    
-    return root; 
+    	return root; 
 } 
   
 
-void RBTree::rotateLeft(Node *&root, Node *&node) 
-{ 
-    Node *temp = node->right; 
+void RBTree::rotateLeft(Node *&root, Node *&node){ 
+	Node *temp = node->right; 
   
-    node->right = temp->left; 
+	node->right = temp->left; 
   
-    if (node->right != NULL) 
-        node->right->parent = node; 
+	if (node->right != NULL){
+		node->right->parent = node; 
+  	}
+	temp->parent = node->parent; 
   
-    temp->parent = node->parent; 
+	if (node->parent == NULL){
+		root = temp; 
+	}
   
-    if (node->parent == NULL) 
-        root = temp; 
+	else if (node == node->parent->left){
+		node->parent->left = temp; 
+	}
   
-    else if (node == node->parent->left) 
-        node->parent->left = temp; 
+	else{
+        	node->parent->right = temp; 
+	}
   
-    else
-        node->parent->right = temp; 
-  
-    temp->left = node; 
-    node->parent = temp; 
+	temp->left = node; 
+	node->parent = temp; 
 } 
   
 void RBTree::rotateRight(Node *&root, Node *&node) 
 { 
   
-    Node *temp = node->left; 
+	Node *temp = node->left; 
    
-    node->left = temp->right; 
+	node->left = temp->right; 
   
-    if (node->left != NULL){
+	if (node->left != NULL){
 	
-        node->left->parent = node; 
-   }
+		node->left->parent = node; 
+   	}
   
     
-    if (node->parent == NULL){
-	
-        root = temp; 
-    }
-    else if (node == node->parent->left){
-		  
-        node->parent->left = temp; 
-    }
-    else{
-	cout << "hi" << endl;
-        node->parent->right = temp; 
-   }
+	if (node->parent == NULL){
+        	root = temp; 
+	}
+	else if (node == node->parent->left){
+		node->parent->left = temp; 
+    	}
+	else{
+		
+		node->parent->right = temp; 
+   	}
 	  
-    temp->right = node; 
-    node->parent = temp; 
+	temp->right = node; 
+	node->parent = temp; 
 } 
   
 
 void RBTree::fix(Node *&root, Node *&node) 
 { 
-	
-  
+
+//http://www.stolerman.net/studies/cs521/red_black_trees.pdf //
+
 	while ((node != root) && (node->color != "BLACK") && (node->parent->color == "RED")){ 
-  		
-	
-  
-      
+		 
+		//Based on link above, if the node's parent is on the left subtree of the node's 			grandparent
 		if (node->parent == node->parent->parent->left){ 
-  
-			
+
 			node->uncle = node->parent->parent->right; 
-  
+  			//If the node's uncle is RED
+			//Case 1 based on link above
+			//We have to "Color a's father and uncle black and color the grandparent red
         		if(node->uncle != NULL && node->uncle->color == "RED"){
 			
 				node->parent->parent->color = "RED";
@@ -179,9 +184,11 @@ void RBTree::fix(Node *&root, Node *&node)
 				node = node->parent->parent;
 				
 			} 
-  
+  			//If the node's uncle is BLACK
+			
 			else{ 
-           			
+           			//We have to rotate left around a's father if the node is on the 						parent's right 
+				//subtree
 				if (node == node->parent->right){ 
 					
 					rotateLeft(root, node->parent); 
@@ -189,11 +196,12 @@ void RBTree::fix(Node *&root, Node *&node)
 					node->parent = node->parent;
 					
 				} 
-  				
+  				//We have to rotate right around a's father if the node is on the 						parent's left 
+				//subtree
+				//Then we have to switch the color between the node's father and 					  grandfather
 				if(node == node->parent->left){
                 			
 					rotateRight(root, node->parent->parent);
-					
 					string tempColor = node->parent->color;
 					node->parent->color = node->parent->parent->color;
 					node->parent->parent->color = tempColor;
@@ -203,28 +211,23 @@ void RBTree::fix(Node *&root, Node *&node)
 			} 
        		} 
   
+		//If the node's parent is on the right subtree
+
+
 		else{ 
 			node->uncle = node->parent->parent->right; 
-  			
         		if(node->uncle != NULL && node->uncle->color == "RED"){
-			
-			
 				node->parent->parent->color = "RED";
-			
 				node->parent->color = "BLACK";
-			
 				node->uncle->color = "BLACK";
-			
 				node = node->parent->parent;
-				
 			} 
   
 			else{ 
            			
 				if (node == node->parent->left){ 
-					
 					rotateRight(root, node->parent); 
-					Node* tempNode = node->parent;
+					
 					node = node->parent;
 					node->parent = node->parent;
 					
@@ -245,27 +248,27 @@ void RBTree::fix(Node *&root, Node *&node)
     root->color = "BLACK"; 
 } 
   
-void levelOrder(Node *root) 
-{ 
-    if (root == NULL) 
-        return; 
+void levelOrder(Node *root) { 
+	if (root == NULL){
+        	return; 
+  	}
+	queue<Node *> q; 
+	q.push(root); 
   
-    std::queue<Node *> q; 
-    q.push(root); 
+	while (!q.empty()){
+ 
+		Node *temp = q.front(); 
+		cout << temp->data << "  "; 
+		q.pop(); 
   
-    while (!q.empty()) 
-    { 
-        Node *temp = q.front(); 
-        cout << temp->data << "  "; 
-        q.pop(); 
-  
-        if (temp->left != NULL) 
-            q.push(temp->left); 
-  
-        if (temp->right != NULL) 
-            q.push(temp->right); 
+		if (temp->left != NULL){ 
+            		q.push(temp->left); 
+  		}
+		if (temp->right != NULL){
+            		q.push(temp->right); 
+		}
 	
-    } 
+	} 
 }
 
 
@@ -283,22 +286,19 @@ void RBTree::insert(const int &data){
 int main() 
 { 
 	RBTree tree;
-    
-	
-    levelOrder(tree.root);
-    
-   
-    return 0; 
+	levelOrder(tree.root);
+	return 0; 
 } 
 
-
+/*
 int main(int argc, char* argv[]){
 
 
 
          
 
-	
+	RBTree tree;
+
 	string inputFileName = argv[1];
 	ifstream inputFile;
 	inputFile.open(inputFileName);
@@ -312,10 +312,14 @@ int main(int argc, char* argv[]){
 		stringInput >> a;
 
 		value = stoi(a);
-		//valueVector.push_back(value);
+		valueVector.push_back(value);
 	}
 	
 	inputFile.close();
+
+	for(int i = 0; i < valueVector.size(); i++){
+		tree.insert(valueVector[i]);
+	}
 	
 
 }
