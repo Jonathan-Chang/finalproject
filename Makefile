@@ -1,3 +1,3 @@
 all:
 	
-	g++ AVLTree.cpp -o AVLTree
+	g++ BRTree.cpp -o BRTree
