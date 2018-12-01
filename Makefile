@@ -1,3 +1,3 @@
 all:
 	
-	g++ BRTree.cpp -o BRTree
+	g++ -std=c++11 BRTree.cpp -o BRTree
