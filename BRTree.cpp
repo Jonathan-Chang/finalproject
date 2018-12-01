@@ -15,6 +15,7 @@
 #include <bits/stdc++.h> 
 #include <deque>
 #include <chrono>
+#include <cstdlib>
 
 
 
@@ -687,7 +688,7 @@ void ascendingInsert(int n) {
 	Milli time = end - start;
 
 	std::cout << "RB: "<< "Inserting " << n
-			  << " items in ascending order took " << time.count()
+			  << " ascending items in order took " << time.count()
 			  << " milliseconds" << std::endl;
 }
 
@@ -707,7 +708,54 @@ void descendingInsert(int n) {
 	Milli time = end - start;
 
 	std::cout << "RB: "<< "Inserting " << n
-			  << " items in descending order took " << time.count()
+			  << " descending items in order took " << time.count()
+			  << " milliseconds" << std::endl;
+}
+
+ofstream out;
+srand(time(NULL));
+void generateRandomData(int n){
+	string fname = "randomData" +n ;
+	fname += ".txt";
+	out.open(fname);
+	
+	for(int i = 0; i < n; i++){
+		out << rand() << endl;
+	}
+
+	out.close();
+}
+
+void randomInsert(int n) {
+	TimePoint start, end;
+
+	start = std::chrono::system_clock::now();
+	
+	RBTree rbtree;
+	string dataname = "randomData" + n;
+	dataname += ".txt";
+	ifstream in(dataname);
+	// if randomDataNUM.txt exists read in the numbers
+	if(!in){
+		// if randomDataNUM.txt dne generate
+		generateRandomData(n);
+	}
+
+
+
+	in.open(dataname);
+	string tmp;
+	for (int i = 0; i <= n; i++) {
+		getline(in,tmp);
+		rbtree.insert(stoi(tmp));
+	}
+	
+	end = std::chrono::system_clock::now();
+
+	Milli time = end - start;
+
+	std::cout << "RB: "<< "Inserting " << n
+			  << " random items in order took " << time.count()
 			  << " milliseconds" << std::endl;
 }
 
