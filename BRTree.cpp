@@ -332,21 +332,21 @@ void RBTree::fixInsert(Node *&root, Node *&node)
   
 void RBTree::fixDelete(Node *node){ 
 	if(node == root){
-		cout << "Hi2" << endl;
+		
 		return;
 	}
 	if(node->parent == NULL){
-		cout << "Hi3" << endl;
+	
 		node->sibling = NULL;
 	}
 	else{
-		cout << "Hi4" << endl;
+		
 		if(node == node->parent->left){
-			cout << "H22i" << endl;
+			
 			node->sibling = node->parent->right;
 		}
 		if(node == node->parent->right){
-			cout << "Hi2222" << endl;
+			
 			node->sibling = node->parent->left;
 			cout << node->sibling->color << endl;
 
@@ -354,33 +354,33 @@ void RBTree::fixDelete(Node *node){
 	}
 
 	if(node->sibling == NULL){
-		cout << "Hi5" << endl;
+		
 		fixDelete(node->parent);
 	}
 	
 	else{
-		cout << "Hi6" << endl;
+		
 		if(node->sibling->color == "RED"){
-			cout << "Hi11s" << endl;
+			
 			node->parent->color = "RED";
 			node->sibling->color = "BLACK";
 			if(node->sibling == node->parent->left){
-				cout << "Hi7" << endl;
+				
 				deleteRotate(node->parent, "RIGHT");
 			
 			}
 			else{
-				cout << "Hi8" << endl;
+				
 				deleteRotate(node->parent, "LEFT");
 
 			}
-			cout << "Hi" << endl;
+		
 			fixDelete(node);
-			cout << "Hi2" << endl;
+			
 		}
 	
 		else{
-			cout << "hello" << endl;
+			
 			//if(node->sibling->left->color == "RED" || node->sibling->right->color == "RED"){
 			if((node->sibling->left != NULL && node->sibling->left->color == "RED") || (node->sibling->right != NULL && node->sibling->right->color == "RED")){
 				cout << "hello2" << endl;
