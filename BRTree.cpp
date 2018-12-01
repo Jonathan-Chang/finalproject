@@ -344,15 +344,15 @@ void RBTree::fixDelete(Node *node){
 		node->sibling = NULL;
 	}
 	else{
-		
+		//Deleted node is on the left subtree
 		if(node == node->parent->left){
-			
+			//Thus the sibling will be on the right subtree
 			node->sibling = node->parent->right;
 		}
 		if(node == node->parent->right){
 			
 			node->sibling = node->parent->left;
-			cout << node->sibling->color << endl;
+			
 
 		}
 	}
@@ -363,7 +363,8 @@ void RBTree::fixDelete(Node *node){
 	}
 	
 	else{
-		
+		//Case 1: If the node's sibling is red
+		//We have to swtich the color between the node's father and grand
 		if(node->sibling->color == "RED"){
 			
 			node->parent->color = "RED";
@@ -383,15 +384,17 @@ void RBTree::fixDelete(Node *node){
 			
 		}
 	
+
+		//If sibling color is BLACK
 		else{
 			
-			//if(node->sibling->left->color == "RED" || node->sibling->right->color == "RED"){
+			//If the sibling chilren are RED
 			if((node->sibling->left != NULL && node->sibling->left->color == "RED") || (node->sibling->right != NULL && node->sibling->right->color == "RED")){
-				cout << "hello2" << endl;
+				
 				if(node->sibling->left != NULL && node->sibling->left->color == "RED"){
-					cout << "hello44" << endl;
+					
 					if(node->sibling == node->parent->left){
-						cout << "hello66" << endl;
+						
 						node->sibling->left->color = node->sibling->color;
 						node->sibling->color = node->parent->color;
 						deleteRotate(node->parent, "RIGHT");
@@ -494,9 +497,13 @@ void levelOrder(Node *root) {
 
 
 void RBTree::insert(const int &data){ 
+	
 	Node *node = createNewNode(data); 
+	
 	root = BinaryInsert(root, node); 
+	
 	fixInsert(root, node); 
+	
 } 
 
 
@@ -713,7 +720,7 @@ void descendingInsert(int n) {
 }
 
 ofstream out;
-srand(time(NULL));
+//srand(time(NULL));
 void generateRandomData(int n){
 	string fname = "randomData" +n ;
 	fname += ".txt";
@@ -747,7 +754,10 @@ void randomInsert(int n) {
 	string tmp;
 	for (int i = 0; i <= n; i++) {
 		getline(in,tmp);
-		rbtree.insert(stoi(tmp));
+		cout << tmp << endl;
+		int inttemp = stoi(tmp);
+		
+		rbtree.insert(inttemp);
 	}
 	
 	end = std::chrono::system_clock::now();
@@ -759,14 +769,21 @@ void randomInsert(int n) {
 			  << " milliseconds" << std::endl;
 }
 
+/*
 int main() 
 { 
+
+
+	
+	
 	ascendingInsert(1);
 	ascendingInsert(1000);
 	ascendingInsert(10000);
 	//ascendingInsert(100000);
 	//ascendingInsert(1000000);
 	//ascendingInsert(10000000);
+
+	
 	
 	descendingInsert(1);
 	descendingInsert(1000);
@@ -774,12 +791,15 @@ int main()
 	//descendingInsert(100000);
 	//descendingInsert(1000000);
 	//descendingInsert(10000000);
+	
+	randomInsert(1);
 
 	return 0;
 
 	
 }
 
+*/
 
 
 
@@ -787,7 +807,6 @@ int main()
 
 
 
-/*
 int main(int argc, char* argv[]){
 
 
@@ -796,6 +815,7 @@ int main(int argc, char* argv[]){
 
 	RBTree tree;
 
+	/*
 	string inputFileName = argv[1];
 	ifstream inputFile;
 	inputFile.open(inputFileName);
@@ -810,19 +830,19 @@ int main(int argc, char* argv[]){
 
 		data = stoi(a);
 		dataVector.push_back(data);
-	}
+	}*/
 	
-	inputFile.close();
-
-	for(int i = 0; i < dataVector.size(); i++){
-		tree.insert(dataVector[i]);
-	}
+	ascendingInsert(1);
+	ascendingInsert(1000);
+	ascendingInsert(10000);
 	
-
+	descendingInsert(1);
+	descendingInsert(1000);
+	descendingInsert(10000);
 }
 
 
-*/
+
 
 
 

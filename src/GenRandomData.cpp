@@ -23,7 +23,7 @@ void generateData(int N) {
 	ofstream out(file);
 
 	for (int i = 0; i < N; i++) {
-		ss_ << getRand(MAX) << endl;
+		ss_ << getRand(30) << endl;
 	}
 	out << ss_.str();
 }
