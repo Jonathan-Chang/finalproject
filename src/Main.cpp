@@ -24,11 +24,28 @@ void ascendingInsert(int n) {
 }
 
 int main() {
-	ascendingInsert(1);
+	ascendingInsert(5000);
 	ascendingInsert(10000);
+	ascendingInsert(15000);
+	ascendingInsert(20000);
+	ascendingInsert(25000);
+	ascendingInsert(30000);
+	ascendingInsert(35000);
+	ascendingInsert(40000);
+	ascendingInsert(45000);
+	ascendingInsert(50000);
+	ascendingInsert(55000);
+	ascendingInsert(55000);
+	ascendingInsert(60000);
+	ascendingInsert(65000);
+	ascendingInsert(70000);
+	ascendingInsert(75000);
+	ascendingInsert(80000);
+	ascendingInsert(85000);
+	ascendingInsert(90000);
+	ascendingInsert(95000);
 	ascendingInsert(100000);
-	ascendingInsert(1000000);
-	ascendingInsert(10000000);
-
+	
+	
 	return 0;
 }

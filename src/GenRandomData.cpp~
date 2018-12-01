@@ -1,0 +1,42 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <stdlib.h>
+#include <time.h>
+
+#define MAX 1000000
+
+using namespace std;
+
+
+int getRand(int max) {
+	int r = rand() % max;
+	return r;
+}
+
+void generateData(int N) {
+	stringstream ss;
+	stringstream ss_;
+	ss << "random_dataset_" << N << ".txt";
+	string file = ss.str();
+	
+	ofstream out();
+
+	for (int i = 0; i < N; i++) {
+		ss_ << getRand(MAX) << endl;
+	}
+	out << ss_.str();
+}
+
+int main() {
+	srand(time(NULL));
+
+	generateData(5000);
+	generateData(10000);
+	generateData(15000);
+	generateData(20000);
+	generateData(25000);
+	generateData(30000);
+	
+	return 0;
+}
