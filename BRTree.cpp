@@ -691,14 +691,41 @@ void ascendingInsert(int n) {
 			  << " milliseconds" << std::endl;
 }
 
+void descendingInsert(int n) {
+	TimePoint start, end;
+
+	start = std::chrono::system_clock::now();
+	
+	RBTree rbtree;
+
+	for (int i = n; i > 0; i--) {
+		rbtree.insert(i);
+	}
+	
+	end = std::chrono::system_clock::now();
+
+	Milli time = end - start;
+
+	std::cout << "RB: "<< "Inserting " << n
+			  << " items in descending order took " << time.count()
+			  << " milliseconds" << std::endl;
+}
+
 int main() 
 { 
 	ascendingInsert(1);
 	ascendingInsert(1000);
 	ascendingInsert(10000);
-	ascendingInsert(100000);
-	ascendingInsert(1000000);
-	ascendingInsert(10000000);
+	//ascendingInsert(100000);
+	//ascendingInsert(1000000);
+	//ascendingInsert(10000000);
+	
+	descendingInsert(1);
+	descendingInsert(1000);
+	descendingInsert(10000);
+	//descendingInsert(100000);
+	//descendingInsert(1000000);
+	//descendingInsert(10000000);
 
 	return 0;
 
