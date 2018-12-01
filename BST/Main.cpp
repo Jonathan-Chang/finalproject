@@ -23,6 +23,8 @@ void ascendingInsert(int n) {
 			  << " milliseconds" << std::endl;
 }
 
+
+
 int main() {
 	ascendingInsert(5000);
 	ascendingInsert(10000);
