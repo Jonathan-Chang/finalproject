@@ -17,6 +17,9 @@ public:
 		left = nullptr;
 		right = nullptr;
 	}
+
+	~Node() {
+	}
 	
 	T value;
 	Node *left;
@@ -30,17 +33,19 @@ public:
 		root = nullptr;
 	}
 
-	void insert(T item) {
-		Node<T> *node = root;
-		Node<T> *parent;
+	~BST() {
+		deleteTree(root);
+	}
 
-		/* If root is null, add item to root */
+	void insert(T item) {
 		if (!root) {
 			root = new Node<T>(item);
 			return;
 		}
 
-		/* Find the correct position to place the item */
+		Node<T> *node, *parent;
+		node = root;
+
 		while (node) {
 			parent = node;
 
@@ -54,30 +59,15 @@ public:
 			parent->left = new Node<T>(item);
 		else
 			parent->right = new Node<T>(item);
+		
 	}
 
 	void remove(T item) {
-		/*		Node *node, *parent;
-
-		if (!root)
-			return;
-
-		*/
+		removeRecur(root, item);
 	}
 
 	Node<T> *search(T item) {
-		Node<T> *node = root;
-		
-		while (root) {
-			if (item < root->value)
-				node = node->left;
-			else if (item > root->value)
-				node = node->right;
-			else
-				return node;
-		}
-
-		return nullptr;
+		return searchRecur(item, root);
 	}
 
 	void print() {
@@ -96,7 +86,63 @@ private:
 		inorder(node->right);
 	}
 
+	Node<T> *searchRecur(T item, Node<T> *node) {
+		if (!node)
+			return nullptr;
+
+		if (item == node->value)
+			return node;
+		else if (item < node->value)
+			return searchRecur(item, node->left);
+		else
+			return searchRecur(item, node->right);
+
+		return nullptr;
+	}
+
+	void removeRecur(Node<T> * &node, T item) {
+		if (!node)
+			return;
+		
+		if (item < node->value) {
+			return removeRecur(node->left, item);
+		}
+
+		if (item > node->value) {
+			return removeRecur(node->right, item);
+		}
+	    
+		if (!node->left && !node->right) {
+			delete node;
+			node = nullptr;
+		} else if (node->left && node->right) {
+			Node<T> *predecessor = node->left;
+			while (predecessor->right)
+				predecessor = predecessor->right;
+			
+			node->value = predecessor->value;
+			
+			removeRecur(node->left, predecessor->value);
+		} else {
+			Node<T> *child = (node->left)? node->left: node->right;
+			Node<T> *curr = node;
+			
+			node = child;
+			
+			delete curr;
+		}
+	}
+
+	void deleteTree(Node<T> *node) {
+		if (!node)
+			return;
+
+		deleteTree(node->left);
+		deleteTree(node->right);
+		delete node;
+	}
 };
+
 
 
 #endif
