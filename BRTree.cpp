@@ -19,6 +19,8 @@
 
 
 using namespace std;
+using TimePoint = std::chrono::time_point<std::chrono::system_clock>;
+using Milli = std::chrono::duration<double, std::ratio<1,1000>>;
 vector<int> dataVector;
 
 
@@ -92,6 +94,26 @@ void inorder(Node *root){
 	inorder(root->right); 
 } 
   
+
+void ascendingInsert(int n) {
+	TimePoint start, end;
+
+	start = std::chrono::system_clock::now();
+	
+	RBTree rbtree;
+
+	for (int i = 0; i < n; i++) {
+		rbtree.insert(i);
+	}
+	
+	end = std::chrono::system_clock::now();
+
+	Milli time = end - start;
+
+	std::cout << "RB: "<< "Inserting " << n
+			  << " items in ascending order took " << time.count()
+			  << " milliseconds" << std::endl;
+}
 
 
 Node* createNewNode(int data){
@@ -671,25 +693,24 @@ void RBTree::deleteVal(const int &data){
 
 int main() 
 { 
-	RBTree tree;
-	tree.insert(7);
-	tree.insert(6);
-	tree.insert(5);
-	tree.insert(4);
-	tree.insert(3);
-	tree.insert(2);
-	tree.insert(1);
-	
-	levelOrder(tree.root);
+	ascendingInsert(1);
+	ascendingInsert(1000);
+	ascendingInsert(10000);
+	ascendingInsert(100000);
+	ascendingInsert(1000000);
+	ascendingInsert(10000000);
 
-		
-	tree.deleteVal(6);
-	cout << "\n" << endl;
-	
-	levelOrder(tree.root);
+	return 0;
 
-	return 0; 
-} 
+	
+}
+
+
+
+
+
+
+
 
 /*
 int main(int argc, char* argv[]){
